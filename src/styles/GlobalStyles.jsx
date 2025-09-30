@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Global, css } from "@emotion/react";
+import { Global, css } from '@emotion/react';
 
 const GlobalStyles = () => (
   <Global
@@ -9,11 +9,11 @@ const GlobalStyles = () => (
         color: inherit;
         text-decoration: none;
       }
-
+      
       ul {
         list-style: none;
       }
-
+      
       .container {
         max-width: 1200px;
         margin: 0 auto;

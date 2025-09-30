@@ -1,9 +1,9 @@
-/* src/components/RestaurantCard.jsx */
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
-import { FaStar, FaHeart, FaMapMarkerAlt, FaWonSign } from "react-icons/fa";
-import { toast } from "react-toastify";
+// src/components/RestaurantCard.js
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
+import { FaStar, FaHeart, FaMapMarkerAlt, FaWonSign } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 // Styled Components는 그대로 유지
 const Card = styled.div`
@@ -12,7 +12,7 @@ const Card = styled.div`
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
-
+  
   &:hover {
     transform: translateY(-5px);
   }
@@ -72,13 +72,13 @@ const LikeButton = styled.button`
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border: 2px solid ${(props) => (props.$liked ? "#ff4757" : "#ddd")};
-  background: ${(props) => (props.$liked ? "#ff4757" : "white")};
-  color: ${(props) => (props.$liked ? "white" : "#666")};
+  border: 2px solid ${props => props.$liked ? '#ff4757' : '#ddd'};
+  background: ${props => props.$liked ? '#ff4757' : 'white'};
+  color: ${props => props.$liked ? 'white' : '#666'};
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s;
-
+  
   &:hover {
     border-color: #ff4757;
     background: #ff4757;
@@ -89,7 +89,7 @@ const LikeButton = styled.button`
 const DetailLink = styled(Link)`
   color: #667eea;
   font-weight: 600;
-
+  
   &:hover {
     text-decoration: underline;
   }
@@ -104,18 +104,22 @@ function RestaurantCard({ restaurant }) {
   useEffect(() => {
     // 1. 좋아요 여부 복원
     try {
-      const likedRestaurants = JSON.parse(localStorage.getItem("likedRestaurants") || "[]");
+      const likedRestaurants = JSON.parse(
+        localStorage.getItem('likedRestaurants') || '[]'
+      );
       if (likedRestaurants.includes(restaurant.id)) {
         setLiked(true);
       }
 
       // 2. 좋아요 수 복원
-      const savedLikes = JSON.parse(localStorage.getItem("restaurantLikes") || "{}");
+      const savedLikes = JSON.parse(
+        localStorage.getItem('restaurantLikes') || '{}'
+      );
       if (savedLikes[restaurant.id] !== undefined) {
         setLikes(savedLikes[restaurant.id]);
       }
     } catch (error) {
-      console.error("LocalStorage 읽기 오류:", error);
+      console.error('LocalStorage 읽기 오류:', error);
     }
   }, [restaurant.id, restaurant.likes]);
 
@@ -127,15 +131,19 @@ function RestaurantCard({ restaurant }) {
     try {
       // 새로운 상태 계산
       const newLikedState = !liked;
-      const newLikesCount = newLikedState ? likes + 1 : Math.max(0, likes - 1); // 음수 방지
+      const newLikesCount = newLikedState 
+        ? likes + 1 
+        : Math.max(0, likes - 1); // 음수 방지
 
       // State 업데이트
       setLiked(newLikedState);
       setLikes(newLikesCount);
 
       // LocalStorage 업데이트 - 좋아요 여부
-      const likedRestaurants = JSON.parse(localStorage.getItem("likedRestaurants") || "[]");
-
+      const likedRestaurants = JSON.parse(
+        localStorage.getItem('likedRestaurants') || '[]'
+      );
+      
       if (newLikedState) {
         // 좋아요 추가
         if (!likedRestaurants.includes(restaurant.id)) {
@@ -148,37 +156,43 @@ function RestaurantCard({ restaurant }) {
         if (index > -1) {
           likedRestaurants.splice(index, 1);
         }
-        toast.info("좋아요를 취소했습니다.");
+        toast.info('좋아요를 취소했습니다.');
       }
-
-      localStorage.setItem("likedRestaurants", JSON.stringify(likedRestaurants));
+      
+      localStorage.setItem('likedRestaurants', JSON.stringify(likedRestaurants));
 
       // LocalStorage 업데이트 - 좋아요 수
-      const restaurantLikes = JSON.parse(localStorage.getItem("restaurantLikes") || "{}");
+      const restaurantLikes = JSON.parse(
+        localStorage.getItem('restaurantLikes') || '{}'
+      );
       restaurantLikes[restaurant.id] = newLikesCount;
-      localStorage.setItem("restaurantLikes", JSON.stringify(restaurantLikes));
+      localStorage.setItem('restaurantLikes', JSON.stringify(restaurantLikes));
 
       // 디버깅용 로그
-      console.log("좋아요 업데이트:", {
+      console.log('좋아요 업데이트:', {
         restaurantId: restaurant.id,
         liked: newLikedState,
-        likes: newLikesCount,
+        likes: newLikesCount
       });
+
     } catch (error) {
-      console.error("좋아요 처리 오류:", error);
-      toast.error("좋아요 처리 중 오류가 발생했습니다.");
+      console.error('좋아요 처리 오류:', error);
+      toast.error('좋아요 처리 중 오류가 발생했습니다.');
     }
   };
 
   return (
     <Card>
-      <CardImage src={restaurant.image || "https://via.placeholder.com/300"} alt={restaurant.name} />
+      <CardImage 
+        src={restaurant.image || 'https://via.placeholder.com/300'} 
+        alt={restaurant.name} 
+      />
       <CardContent>
         <CardHeader>
           <CardTitle>{restaurant.name}</CardTitle>
           <CategoryBadge>{restaurant.category}</CategoryBadge>
         </CardHeader>
-
+        
         <InfoRow>
           <FaMapMarkerAlt /> {restaurant.location}
         </InfoRow>
@@ -188,18 +202,22 @@ function RestaurantCard({ restaurant }) {
         <InfoRow>
           <FaStar color="gold" /> {restaurant.rating}/5.0
         </InfoRow>
-
-        <p style={{ margin: "1rem 0", color: "#666" }}>{restaurant.description}</p>
-
+        
+        <p style={{ margin: '1rem 0', color: '#666' }}>
+          {restaurant.description}
+        </p>
+        
         <ActionRow>
-          <LikeButton
-            $liked={liked} // $ prefix 추가
+          <LikeButton 
+            $liked={liked}  // $ prefix 추가
             onClick={handleLike}
-            type="button" // 명시적 type 지정
+            type="button"  // 명시적 type 지정
           >
             <FaHeart /> {likes}
           </LikeButton>
-          <DetailLink to={`/restaurant/${restaurant.id}`}>자세히 보기 →</DetailLink>
+          <DetailLink to={`/restaurant/${restaurant.id}`}>
+            자세히 보기 →
+          </DetailLink>
         </ActionRow>
       </CardContent>
     </Card>

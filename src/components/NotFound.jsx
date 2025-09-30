@@ -1,8 +1,7 @@
-/* src/components/NotFound.jsx */
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
-import { FaExclamationTriangle } from "react-icons/fa";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 const Container = styled.div`
   text-align: center;
@@ -32,7 +31,7 @@ const HomeLink = styled(Link)`
   color: white;
   border-radius: 8px;
   transition: background 0.3s;
-
+  
   &:hover {
     background: #5a67d8;
   }

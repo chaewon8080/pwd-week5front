@@ -1,7 +1,6 @@
-/* src/components/RestaurantList.jsx */
-import React from "react";
-import styled from "@emotion/styled";
-import RestaurantCard from "./RestaurantCard";
+import React from 'react';
+import styled from '@emotion/styled';
+import RestaurantCard from './RestaurantCard';
 
 const ListContainer = styled.div`
   display: grid;
@@ -22,7 +21,7 @@ function RestaurantList({ restaurants }) {
 
   return (
     <ListContainer>
-      {restaurants.map((restaurant) => (
+      {restaurants.map(restaurant => (
         <RestaurantCard key={restaurant.id} restaurant={restaurant} />
       ))}
     </ListContainer>

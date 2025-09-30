@@ -1,8 +1,7 @@
-/* src/components/PopularRestaurants.jsx */
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
-import { FaTrophy, FaStar } from "react-icons/fa";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
+import { FaTrophy, FaStar } from 'react-icons/fa';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -27,11 +26,11 @@ const RankingItem = styled(Link)`
   padding: 1rem;
   border-bottom: 1px solid #f5f5f5;
   transition: background 0.3s;
-
+  
   &:hover {
     background: #f9f9f9;
   }
-
+  
   &:last-child {
     border-bottom: none;
   }
@@ -41,7 +40,7 @@ const RankBadge = styled.div`
   font-size: 1.5rem;
   width: 50px;
   text-align: center;
-
+  
   svg {
     font-size: 1.5rem;
   }
@@ -50,12 +49,12 @@ const RankBadge = styled.div`
 const RestaurantInfo = styled.div`
   flex: 1;
   margin-left: 1rem;
-
+  
   h3 {
     margin-bottom: 0.5rem;
     color: #333;
   }
-
+  
   p {
     color: #666;
     font-size: 0.9rem;
@@ -80,16 +79,14 @@ function PopularRestaurants({ restaurants }) {
   return (
     <Container>
       <Title>🔥 이번 주 인기 TOP 5</Title>
-
+      
       <RankingList>
         {restaurants.map((restaurant, index) => (
           <RankingItem key={restaurant.id} to={`/restaurant/${restaurant.id}`}>
             <RankBadge>{getRankIcon(index)}</RankBadge>
             <RestaurantInfo>
               <h3>{restaurant.name}</h3>
-              <p>
-                {restaurant.category} • {restaurant.location}
-              </p>
+              <p>{restaurant.category} • {restaurant.location}</p>
             </RestaurantInfo>
             <Rating>
               <FaStar color="gold" />
